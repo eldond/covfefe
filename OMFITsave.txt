@@ -1,5 +1,8 @@
+['OUTPUTS'] <-:-:-> OMFITtree <-:-:->  <-:-:-> {}
+['INPUTS'] <-:-:-> OMFITtree <-:-:->  <-:-:-> {}
 ['SCRIPTS'] <-:-:-> OMFITtree <-:-:->  <-:-:-> {}
 ['SCRIPTS']['set_initial_distribution'] <-:-:-> OMFITpythonTask <-:-:-> ./SCRIPTS/set_initial_distribution.py <-:-:-> {}
+['SCRIPTS']['evolve'] <-:-:-> OMFITpythonTask <-:-:-> ./SCRIPTS/evolve.py <-:-:-> {}
 ['PLOTS'] <-:-:-> OMFITtree <-:-:->  <-:-:-> {}
 ['PLOTS']['plot_distribution'] <-:-:-> OMFITpythonPlot <-:-:-> ./PLOTS/plot_distribution.py <-:-:-> {}
 ['GUIS'] <-:-:-> OMFITtree <-:-:->  <-:-:-> {}

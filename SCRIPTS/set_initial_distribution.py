@@ -13,11 +13,13 @@ defaultVars parameters
 
 :param N: Number of particles to simulate
 
+:param plot_after: T/F: plot distribution after initializing
 """
 defaultVars(
     R=root['SETTINGS']['PHYSICS'].setdefault('R', 3.5),
     Z=root['SETTINGS']['PHYSICS'].setdefault('Z', 5.5),
     N=root['SETTINGS']['PHYSICS'].setdefault('N', 1000),
+    plot_after=True,
 )
 
 z = random(N) * Z
@@ -31,3 +33,7 @@ init = root['OUTPUTS'].setdefault('initial_distribution', OMFITtree())
 init['x'] = x
 init['y'] = y
 init['z'] = z
+init['t'] = 0
+
+if plot_after:
+    root['PLOTS']['plot_distribution'].plot(t=0)

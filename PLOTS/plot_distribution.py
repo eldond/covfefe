@@ -6,31 +6,57 @@ This script plots particle distributions in the COVFEFE model
 
 defaultVars parameters
 ----------------------
-:param dist: Select which distribution to plot. 0 plots initial distribution.
+:param t: Select time slice to plot
 
 :param R: Radius of the cup (cm)
 
 :param Z: Height of the cup (cm)
 """
 defaultVars(
-    dist=0,
-    R=root['SETTINGS']['PHYSICS'].setdefault('R', 3.5),
-    Z=root['SETTINGS']['PHYSICS'].setdefault('Z', 5.5),
+    t=-1,
+    nbins=50,
+    dt=root['SETTINGS']['PHYSICS']['dt'],
+    nt=root['SETTINGS']['PHYSICS']['nt'],
+    R=root['SETTINGS']['PHYSICS']['R'],
+    Z=root['SETTINGS']['PHYSICS']['Z'],
+    N=root['SETTINGS']['PHYSICS']['N'],
 )
 
-if dist == 0:
+if t == -1:
+    if 'distribution' not in root['OUTPUTS']:
+        t = 0
+
+# Select distribution
+if t == 0:
     d = root['OUTPUTS']['initial_distribution']
     dist_label = 'initial distribution'
-else:
-    d = root['OUTPUTS']['final_distribution']
+    x = d['x']
+    y = d['y']
+    z = d['z']
+elif t == -1:
+    d = root['OUTPUTS']['distribution']
     dist_label = 'final distribution'
+    it = round(float(t)/dt)
+    x = d['x']
+    y = d['y']
+    z = d['z']
+else:
+    d = root['OUTPUTS']['distribution']['history']
+    it = round(float(t)/dt)
+    dist_label = 'distribution at t = {:}'.format(it*dt)
+    x = d['x'][t, :]
+    y = d['y'][t, :]
+    z = d['z'][t, :]
 
-x = d['x']
-y = d['y']
-z = d['z']
+# Sanitize inputs
+if nbins > N/10.:
+    nbins = floor(N/10.)
+
+# Get out data
 
 # Plot
 fig = gcf()
+fig.suptitle('COVFEFE model {} w/ {} test particles'.format(dist_label, N))
 ax1 = fig.add_subplot(221)
 ax2 = fig.add_subplot(222, projection='3d')
 ax3 = fig.add_subplot(223)
@@ -42,10 +68,11 @@ tc = linspace(0, 2*pi, 360)
 ax1.plot(R*cos(tc), R*sin(tc), color='k')
 ax1.set_xlabel('X (cm)')
 ax1.set_ylabel('Y (cm)')
-ax1.set_title('COVFEFE model ({})'.format(dist_label))
+ax1.text(0.99, 0.99, 'R = {:} cm\nZ = {:} cm'.format(R, Z),
+         ha='right', va='top', transform=ax1.transAxes,
+         fontsize=8)
 
 ax2.set_aspect('equal', adjustable='box')
-ax2.set_title('COVFEFE model ({})'.format(dist_label))
 ax2.plot(x, y, z, '.', alpha=0.5)
 ax2.plot(R*cos(tc), R*sin(tc), 0*tc, color='k')
 ax2.plot(R*cos(tc), R*sin(tc), 0*tc+Z, color='k')
@@ -57,11 +84,13 @@ ax2.set_zlabel('Z (cm)')
 r = sqrt(x**2 + y**2)
 theta = arctan2(x, y)
 
-ax3.hist(r**2)
+ax3.hist(r**2, bins=nbins)
 ax3.set_xlabel('$R^2$ (cm$^2$)')
 ax3.set_ylabel('Occurrences')
+ax3.axvline(R**2, color='k', linestyle='--')
 
-ax4.hist(theta/pi)
+ax4.hist(theta/pi, bins=nbins)
 ax4.set_xlabel('$\\theta/\pi$')
+ax4.get_yaxis().set_visible(False)
 
 tight_layout()

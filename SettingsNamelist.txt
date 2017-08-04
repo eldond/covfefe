@@ -6,7 +6,7 @@
   "nt": 1000, 
   "dt": 60, 
   "temp": 369.15, 
-  "mass": 3e-06
+  "mass": 3e-09
  }, 
  "SETUP": {
   "workDir": null, 
@@ -18,7 +18,8 @@
   "device": null, 
   "shots": null, 
   "times": null, 
-  "runid": null
+  "runid": null, 
+  "plot_after": true
  }, 
  "REMOTE_SETUP": {
   "serverPicker": null, 
@@ -29,7 +30,7 @@
  "MODULE": {
   "version": "", 
   "contact": [], 
-  "defaultGUI": null, 
+  "defaultGUI": "root['GUIS']['covfefe_gui']", 
   "ID": "covfefe"
  }, 
  "DEPENDENCIES": {}

@@ -5,7 +5,9 @@
 ['SCRIPTS']['evolve'] <-:-:-> OMFITpythonTask <-:-:-> ./SCRIPTS/evolve.py <-:-:-> {}
 ['PLOTS'] <-:-:-> OMFITtree <-:-:->  <-:-:-> {}
 ['PLOTS']['plot_distribution'] <-:-:-> OMFITpythonPlot <-:-:-> ./PLOTS/plot_distribution.py <-:-:-> {}
+['PLOTS']['show_history'] <-:-:-> OMFITpythonPlot <-:-:-> ./PLOTS/show_history.py <-:-:-> {}
 ['GUIS'] <-:-:-> OMFITtree <-:-:->  <-:-:-> {}
+['GUIS']['covfefe_gui'] <-:-:-> OMFITpythonGUI <-:-:-> ./GUIS/covfefe_gui.py <-:-:-> {}
 ['LIB'] <-:-:-> OMFITtree <-:-:->  <-:-:-> {}
 ['LIB']['OMFITlib_startup'] <-:-:-> OMFITpythonTask <-:-:-> ./LIB/OMFITlib_startup.py <-:-:-> {}
 ['SETTINGS'] <-:-:-> OMFITsettings <-:-:-> ./SettingsNamelist.txt <-:-:-> {}

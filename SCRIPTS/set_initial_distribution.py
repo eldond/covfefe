@@ -19,7 +19,7 @@ defaultVars(
     R=root['SETTINGS']['PHYSICS'].setdefault('R', 3.5),
     Z=root['SETTINGS']['PHYSICS'].setdefault('Z', 5.5),
     N=root['SETTINGS']['PHYSICS'].setdefault('N', 1000),
-    plot_after=True,
+    plot_after=root['SETTINGS']['EXPERIMENT']['plot_after'],
 )
 
 z = random(N) * Z

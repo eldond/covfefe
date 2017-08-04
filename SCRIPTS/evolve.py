@@ -14,10 +14,12 @@ defaultVars parameters
 :param temp: Temperature of the coffee in K
 
 :param mass: Mass of milk solid particles in g. From http://www4.ncsu.edu/~adpierce/u03_characteristics_milk.pdf, a milk
-    fat globule has a diameter of 1-18 um. Call its radius 9 um and call the density 1000 kg/L. Then the mass is about
-    3 ug = 3e-6 g.
+    fat globule has a diameter of 1-18 um. Call its radius 9 um and call the density 1 g/cm^3. Then the mass is about
+    3e-9 g.
 
 :param random_thermal_motion_enable: T/F: random thermal motions are on
+
+:param plot_after: T/F: open plot after
 """
 defaultVars(
     nt=root['SETTINGS']['PHYSICS']['nt'],
@@ -25,6 +27,7 @@ defaultVars(
     temp=root['SETTINGS']['PHYSICS']['temp'],
     mass=root['SETTINGS']['PHYSICS']['mass'],
     random_thermal_motion_enable=True,
+    plot_after=root['SETTINGS']['EXPERIMENT']['plot_after'],
 )
 
 # Make sure we're ready to run
@@ -38,8 +41,13 @@ dist = root['OUTPUTS']['distribution']  # Shortcut
 t0 = dist['t']
 t = linspace(t0, t0+dt*nt, nt+1)
 N = len(dist['x'])
-thermal_speed = sqrt(2*temp*constants.k/mass)
+boltzmann = constants.k  # m^2 kg s^-1 K^-1
+boltzmann *= 1e3  # Convert to g
+boltzmann *= 1e-4  # Convert to cm
+thermal_speed = sqrt(2*temp*boltzmann/mass)
 vt_comp = thermal_speed/sqrt(3)  # Each of the x, y, z, components will have this typical thermal velocity
+
+printd('vt_comp = {:}'.format(vt_comp))
 
 # Set up histories
 hist = dist.setdefault('history', OMFITtree())
@@ -62,3 +70,6 @@ dist['y'] = hist['y'][-1, :]
 dist['z'] = hist['z'][-1, :]
 dist['t'] = t[-1]
 dist['t0'] = t0
+
+if plot_after:
+    root['PLOTS']['plot_distribution'].plot(t=-1)

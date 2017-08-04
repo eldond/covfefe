@@ -8,12 +8,20 @@ defaultVars parameters
 ----------------------
 :param t: Select time slice to plot
 
+:param nbins: Number of bins in histogram
+
+:param dt: Time step (s)
+
+:param nt: Number of time steps
+
 :param R: Radius of the cup (cm)
 
 :param Z: Height of the cup (cm)
+
+:param N: Number of tracked test particles
 """
 defaultVars(
-    t=-1,
+    t=root['SETTINGS']['EXPERIMENT']['time'],
     nbins=50,
     dt=root['SETTINGS']['PHYSICS']['dt'],
     nt=root['SETTINGS']['PHYSICS']['nt'],
@@ -42,11 +50,14 @@ elif t == -1:
     z = d['z']
 else:
     d = root['OUTPUTS']['distribution']['history']
-    it = round(float(t)/dt)
-    dist_label = 'distribution at t = {:}'.format(it*dt)
-    x = d['x'][t, :]
-    y = d['y'][t, :]
-    z = d['z'][t, :]
+    t0 = root['OUTPUTS']['distribution']['t0']
+    it = int(round(float(t-t0)/dt))
+    if it < 0:
+        it = 0
+    dist_label = 'distribution at t = {:}'.format(it*dt+t0)
+    x = d['x'][it, :]
+    y = d['y'][it, :]
+    z = d['z'][it, :]
 
 # Sanitize inputs
 if nbins > N/10.:

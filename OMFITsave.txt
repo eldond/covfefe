@@ -1,0 +1,20 @@
+['SCRIPTS'] <-:-:-> OMFITtree <-:-:->  <-:-:-> {}
+['SCRIPTS']['set_initial_distribution'] <-:-:-> OMFITpythonTask <-:-:-> ./SCRIPTS/set_initial_distribution.py <-:-:-> {}
+['PLOTS'] <-:-:-> OMFITtree <-:-:->  <-:-:-> {}
+['PLOTS']['plot_distribution'] <-:-:-> OMFITpythonPlot <-:-:-> ./PLOTS/plot_distribution.py <-:-:-> {}
+['GUIS'] <-:-:-> OMFITtree <-:-:->  <-:-:-> {}
+['LIB'] <-:-:-> OMFITtree <-:-:->  <-:-:-> {}
+['LIB']['OMFITlib_startup'] <-:-:-> OMFITpythonTask <-:-:-> ./LIB/OMFITlib_startup.py <-:-:-> {}
+['SETTINGS'] <-:-:-> OMFITsettings <-:-:-> ./SettingsNamelist.txt <-:-:-> {}
+['SETTINGS']['SETUP']['workDir'] <-:-:-> OMFITexpression <-:-:-> _"OMFITworkDir(root,'')" <-:-:-> {}
+['SETTINGS']['EXPERIMENT']['shot'] <-:-:-> OMFITexpression <-:-:-> _"try:\n    return_variable=OMFITmodules[-2]['SETTINGS']['EXPERIMENT']['shot']\nexcept Exception:\n    return_variable=MainSettings['EXPERIMENT']['shot']\n" <-:-:-> {}
+['SETTINGS']['EXPERIMENT']['time'] <-:-:-> OMFITexpression <-:-:-> _"try:\n    return_variable=OMFITmodules[-2]['SETTINGS']['EXPERIMENT']['time']\nexcept Exception:\n    return_variable=MainSettings['EXPERIMENT']['time']\n" <-:-:-> {}
+['SETTINGS']['EXPERIMENT']['device'] <-:-:-> OMFITexpression <-:-:-> _"try:\n    return_variable=OMFITmodules[-2]['SETTINGS']['EXPERIMENT']['device']\nexcept Exception:\n    return_variable=MainSettings['EXPERIMENT']['device']\n" <-:-:-> {}
+['SETTINGS']['EXPERIMENT']['shots'] <-:-:-> OMFITexpression <-:-:-> _"try:\n    return_variable=OMFITmodules[-2]['SETTINGS']['EXPERIMENT']['shots']\nexcept Exception:\n    return_variable=MainSettings['EXPERIMENT']['shots']\n" <-:-:-> {}
+['SETTINGS']['EXPERIMENT']['times'] <-:-:-> OMFITexpression <-:-:-> _"try:\n    return_variable=OMFITmodules[-2]['SETTINGS']['EXPERIMENT']['times']\nexcept Exception:\n    return_variable=MainSettings['EXPERIMENT']['times']\n" <-:-:-> {}
+['SETTINGS']['EXPERIMENT']['runid'] <-:-:-> OMFITexpression <-:-:-> _"try:\n    return_variable=OMFITmodules[-2]['SETTINGS']['EXPERIMENT']['runid']\nexcept Exception:\n    return_variable=MainSettings['EXPERIMENT']['runid']\n" <-:-:-> {}
+['SETTINGS']['REMOTE_SETUP']['serverPicker'] <-:-:-> OMFITexpression <-:-:-> _"try:\n    return_variable=str(OMFITmodules[-2]['SETTINGS']['REMOTE_SETUP']['serverPicker'])\nexcept Exception:\n    return_variable='default'" <-:-:-> {}
+['SETTINGS']['REMOTE_SETUP']['workDir'] <-:-:-> OMFITexpression <-:-:-> _"OMFITworkDir(root,parent['serverPicker'])" <-:-:-> {}
+['SETTINGS']['REMOTE_SETUP']['server'] <-:-:-> OMFITexpression <-:-:-> _"SERVER[parent['serverPicker']]['server']" <-:-:-> {}
+['SETTINGS']['REMOTE_SETUP']['tunnel'] <-:-:-> OMFITexpression <-:-:-> _"SERVER[parent['serverPicker']]['tunnel']" <-:-:-> {}
+['help'] <-:-:-> OMFITascii <-:-:-> ./help.txt <-:-:-> {}

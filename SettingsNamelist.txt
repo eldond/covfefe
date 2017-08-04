@@ -1,0 +1,32 @@
+{
+ "PHYSICS": {
+  "R": 3.5, 
+  "Z": 5.5, 
+  "N": 1000
+ }, 
+ "SETUP": {
+  "workDir": null, 
+  "executable": null
+ }, 
+ "EXPERIMENT": {
+  "shot": null, 
+  "time": null, 
+  "device": null, 
+  "shots": null, 
+  "times": null, 
+  "runid": null
+ }, 
+ "REMOTE_SETUP": {
+  "serverPicker": null, 
+  "workDir": null, 
+  "server": null, 
+  "tunnel": null
+ }, 
+ "MODULE": {
+  "version": "", 
+  "contact": [], 
+  "defaultGUI": null, 
+  "ID": "covfefe"
+ }, 
+ "DEPENDENCIES": {}
+}
